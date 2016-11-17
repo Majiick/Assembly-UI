@@ -7,11 +7,9 @@ import java.nio.file.Paths;
 
 
 public class FileReader {
-    byte[] data;
-
-    FileReader(String filePath) {
+    static byte[] readFile(String filePath) {
         try {
-            data = Files.readAllBytes(Paths.get(filePath));
+            return Files.readAllBytes(Paths.get(filePath));
         } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }
