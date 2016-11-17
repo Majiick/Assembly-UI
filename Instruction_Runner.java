@@ -3,29 +3,40 @@
  */
 
 import capstone.Capstone;
-import java.util.Arrays;
+import java.util.*;
 
 
 public class Instruction_Runner {
+    static final String[] flowRedirectors = {"call", "jmp", "ret"};
+
     byte[] bytes;
     int startLocation;
     int nextInstruction;
     Capstone cs;
+    Stack stack = new Stack();
+    Instruction_Runner from_block;
+    Code_Block block;
 
     boolean finished = false;
+    boolean paused = false;
 
     public Code_Block getBlock() {
         return block;
     }
 
-    Code_Block block;
 
-    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs) {
+
+    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, Instruction_Runner from_block) {
         this.bytes = bytes;
         this.startLocation = startLocation;
         this.cs = cs;
         this.nextInstruction = startLocation;
         block = new Code_Block();
+        this.from_block = from_block;
+    }
+
+    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs) {
+        this(bytes, startLocation, cs, null);
     }
 
     public void step() {
@@ -37,11 +48,20 @@ public class Instruction_Runner {
         }
 
         for (Capstone.CsInsn insn : allInsn) {
-            System.out.printf("0x%x:\t%s\t%s\n", insn.address,
-                    insn.mnemonic, insn.opStr);
+//            System.out.printf("0x%x:\t%s\t%s\n", insn.address,
+//                    insn.mnemonic, insn.opStr);
 
             nextInstruction += insn.size;
             block.instructions.add(insn);
+
+            if (Arrays.asList(flowRedirectors).contains(insn.mnemonic)) {
+                int redirectionLocation = Mnemonic_Redirection_Calculator.getRedirectionLocation(insn);
+                if (redirectionLocation != 0) {
+                    System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
+                    this.paused = true;
+                    Test.makeRunner(redirectionLocation, this);
+                }
+            }
         }
     }
 

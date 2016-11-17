@@ -2,8 +2,8 @@ import processing.core.*;
 import java.util.Arrays;
 import capstone.Capstone;
 import processing.event.MouseEvent;
-
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Test extends PApplet{
     final static int entryPointOfProgram = 0x12A0 - 0x1000;
@@ -30,16 +30,14 @@ public class Test extends PApplet{
         cs.setDetail(Capstone.CS_OPT_DETAIL); //Turn on detailed mode.
 
         makeRunner(entryPointOfProgram);
-        for (Instruction_Runner runner : runners) {
-            runner.step();
-            runner.step();
-            runner.step();
-            runner.step();
-        }
     }
 
     public void draw(){
         background(0);
+
+        for (Instruction_Runner runner : runners.stream().filter((r) -> !r.finished && !r.paused).collect(Collectors.toList())) {
+            runner.step();
+        }
 
         drawer.draw(runners);
     }
@@ -64,6 +62,10 @@ public class Test extends PApplet{
     }
 
     public static void makeRunner(int startLocation) {
-        runners.add(new Instruction_Runner(bytes, entryPointOfProgram, cs));
+        runners.add(new Instruction_Runner(bytes, startLocation, cs));
+    }
+
+    public static void makeRunner(int startLocation, Instruction_Runner from_block) {
+        runners.add(new Instruction_Runner(bytes, startLocation, cs, from_block));
     }
 }
