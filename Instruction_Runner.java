@@ -1,6 +1,7 @@
 /*
     Runs through instructions.
  */
+
 import capstone.Capstone;
 import java.util.Arrays;
 
@@ -11,11 +12,20 @@ public class Instruction_Runner {
     int nextInstruction;
     Capstone cs;
 
+    boolean finished = false;
+
+    public Code_Block getBlock() {
+        return block;
+    }
+
+    Code_Block block;
+
     Instruction_Runner(byte[] bytes, int startLocation, Capstone cs) {
         this.bytes = bytes;
         this.startLocation = startLocation;
         this.cs = cs;
         this.nextInstruction = startLocation;
+        block = new Code_Block();
     }
 
     public void step() {
@@ -31,6 +41,7 @@ public class Instruction_Runner {
                     insn.mnemonic, insn.opStr);
 
             nextInstruction += insn.size;
+            block.instructions.add(insn);
         }
     }
 
