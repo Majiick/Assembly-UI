@@ -9,6 +9,7 @@ public class Test extends PApplet{
     final static int entryPointOfProgram = 0x12A0 - 0x1000;
     final static int IAT_RVA = 0xE14C + 0x400000;
     final static int IAT_SIZE = 0xFC + 0x400000;
+    final static int LOCATION_OF_EXITPROCESS = 0x70d0;
 
     //Not super use of static, I admit. But, there shouldn't ever be more than one of these in Test.
     static List<Instruction_Runner> runners = new ArrayList<>();

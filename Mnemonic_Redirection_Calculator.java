@@ -40,9 +40,9 @@ public class Mnemonic_Redirection_Calculator {
         }
 
         public int calculateAbsoluteAddress(Capstone.CsInsn insn) {
-//            X86.OpInfo operands = (X86.OpInfo) insn.operands;
-//            return (int)operands.op[0].value.mem.disp;
-            return 0;
+            X86.OpInfo operands = (X86.OpInfo) insn.operands;
+            System.out.println((int)operands.op[0].value.mem.disp);
+            return (int)operands.op[0].value.mem.disp;
         }
     }
 
@@ -53,7 +53,7 @@ public class Mnemonic_Redirection_Calculator {
 
         public int calculateAbsoluteAddress(Capstone.CsInsn insn) {
             X86.OpInfo operands = (X86.OpInfo) insn.operands;
-
+            System.out.println((int)operands.op[0].value.mem.disp);
             return (int)operands.op[0].value.mem.disp;
         }
     }

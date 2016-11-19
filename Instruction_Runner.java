@@ -41,7 +41,6 @@ public class Instruction_Runner {
 
     public void step() {
         //http://stackoverflow.com/questions/14698350/x86-64-asm-maximum-bytes-for-an-instruction : The maximum bytes for one instruction is 15 bytes.
-        System.out.println("Next instruction: " + nextInstruction);
         Capstone.CsInsn[] allInsn = cs.disasm(Arrays.copyOfRange(bytes, nextInstruction, nextInstruction + 15), nextInstruction, 0x1);
         if (allInsn.length > 1 || allInsn.length == 0) {
             System.out.println("This should never happen. Not throwing an exception because it's to see if my preconception is false and this cannot be fixed.");
@@ -53,7 +52,6 @@ public class Instruction_Runner {
 //                    insn.mnemonic, insn.opStr);
 
             nextInstruction += insn.size;
-            System.out.println("Insn size: " + insn.size);
             block.instructions.add(insn);
 
             if (Arrays.asList(flowRedirectors).contains(insn.mnemonic)) {
@@ -64,8 +62,18 @@ public class Instruction_Runner {
                     ret();
                 }
 
+                if(redirection.address == 0) {
+                    continue;
+                }
+
+                if(redirection.address == Test.LOCATION_OF_EXITPROCESS) {
+                    end();
+                }
+
                 if (redirection.toIAT()) {
-                    ret();
+                    if (from_block != null) {
+                        ret();
+                    }
                 } else {
                     System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
                     this.paused = true;
@@ -81,8 +89,11 @@ public class Instruction_Runner {
         this.from_block.awaken();
     }
 
-    protected void awaken() {
+    void awaken() {
         this.paused = false;
     }
 
+    void end() {
+        this.finished = true;
+    }
 }
