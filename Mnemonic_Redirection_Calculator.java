@@ -46,6 +46,18 @@ public class Mnemonic_Redirection_Calculator {
         }
     }
 
+    static class FF_25 extends Valid_Instruction implements IInstruction{
+        FF_25() {
+            super(0xFF, 0x25);
+        }
+
+        public int calculateAbsoluteAddress(Capstone.CsInsn insn) {
+            X86.OpInfo operands = (X86.OpInfo) insn.operands;
+
+            return (int)operands.op[0].value.mem.disp;
+        }
+    }
+
     static class E8 extends Valid_Instruction implements IInstruction{
         E8() {
             super(0xE8, 0x00);
@@ -53,13 +65,14 @@ public class Mnemonic_Redirection_Calculator {
 
         public int calculateAbsoluteAddress(Capstone.CsInsn insn) {
             X86.OpInfo operands = (X86.OpInfo) insn.operands;
+
             return (int)operands.op[0].value.imm;
         }
     }
 
-    static IInstruction[] validInstructions = {new FF_15(), new E8()};
+    static IInstruction[] validInstructions = {new FF_15(), new E8(), new FF_25()};
 
-    public static int getRedirectionLocation(Capstone.CsInsn insn) {
+    public static Redirection getRedirectionLocation(Capstone.CsInsn insn) {
         X86.OpInfo operands = (X86.OpInfo) insn.operands;
         if (operands.op.length > 1) {
             System.out.println("There shouldn't ever be more than 1 operand here.");
@@ -71,7 +84,7 @@ public class Mnemonic_Redirection_Calculator {
 
         List<IInstruction> l = Arrays.asList(validInstructions).stream().filter((o) -> o.equals(new Valid_Instruction(operands.opcode[0], operands.modrm))).collect(Collectors.toList());
         if(!l.isEmpty()) {
-            return l.get(0).calculateAbsoluteAddress(insn);
+            return new Redirection(l.get(0).calculateAbsoluteAddress(insn));
         }
 
 
@@ -84,6 +97,6 @@ public class Mnemonic_Redirection_Calculator {
 //        System.out.println(new Valid_Instruction(0xFF, 0x15).equals(new Valid_Instruction(operands.opcode[0], operands.modrm)));
 //        System.out.println(String.format("%02x", operands.opcode[0]) + " " + String.format("%02x", operands.modrm));
 
-        return 0;
+        return new Redirection(0);
     }
 }
