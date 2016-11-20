@@ -35,6 +35,8 @@ public class Instruction_Runner {
         block = new Code_Block();
         this.from_block = from_block;
         this.level = level;
+
+        if (from_block == null) block.entryPoint = true;
     }
 
     Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, int level) {
@@ -84,7 +86,6 @@ public class Instruction_Runner {
                 }
             }
         }
-
     }
 
     void ret() {

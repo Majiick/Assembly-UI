@@ -15,12 +15,17 @@ public class Code_Block {
     public PVector pos;
     public PVector size;
     public int directionInTree = 0;
+    public boolean entryPoint = false;
 
     public void draw(Test t, PVector loc) {
         pos = loc;
         size = new PVector(biggestInstructionLength() * 7, instructions.size() * 11 + 11, 7);
         //Draw rectangle.
         t.fill(255, 140, 0);
+        if (entryPoint) {
+            t.fill(0);
+        }
+        
         t.rect(loc.x, loc.y, size.x, size.y); //Draw a curved rectangle.
         traverseRangeFemale.updateRange((int)-(size.x/2), (int)(size.x/2));
         traverseRangeMale.updateRange((int)-(size.x/2), (int)(size.x/2));
