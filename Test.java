@@ -22,6 +22,9 @@ public class Test extends PApplet{
     }
 
     public void setup() {
+        PFont scifiFont = loadFont("MagmawaveCaps-Bold-48.vlw");
+        textFont(scifiFont);
+
         drawer = new Code_Block_Drawer(this);
 
         bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\helloWorld32.bin");
@@ -36,7 +39,8 @@ public class Test extends PApplet{
     }
 
     public void draw(){
-        background(0);
+        background(109, 0, 182);
+        stroke(0);
 
         if (keyPressed ) {
             for (Instruction_Runner runner : runners.stream().filter((r) -> !r.finished && !r.paused).collect(Collectors.toList())) {

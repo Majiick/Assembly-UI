@@ -55,7 +55,9 @@ public class Code_Block_Drawer {
             for(Instruction_Runner runner : level) {
                 if (runner.from_block != null) {
                     if (runner.block.pos != null && runner.from_block.block.pos != null) {
-                        t.line(runner.block.pos.x, runner.block.pos.y, runner.from_block.block.pos.x, runner.from_block.block.pos.y);
+                        Code_Block parent = runner.from_block.block;
+                        Code_Block child = runner.block;
+                        t.line(parent.pos.x + parent.size.x/2, parent.pos.y + parent.size.y, child.pos.x + child.size.x/2, child.pos.y);
                     }
                 }
             }

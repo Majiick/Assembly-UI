@@ -13,19 +13,21 @@ public class Code_Block {
     public List<String> descriptors = new ArrayList<>();
     public String level = "0";
     public PVector pos;
+    public PVector size;
 
     public void draw(Test t, PVector loc) {
         pos = loc;
+        size = new PVector(biggestInstructionLength() * 7, instructions.size() * 11 + 11, 7);
         //Draw rectangle.
-        t.fill(255);
-        t.rect(loc.x, loc.y, biggestInstructionLength() * 7, instructions.size() * 11 + 11                       , 7); //Draw a curved rectangle.
+        t.fill(255, 140, 0);
+        t.rect(loc.x, loc.y, size.x, size.y); //Draw a curved rectangle.
 
         //Draw text.
         t.textSize(10);
-        t.fill(0);
+        t.fill(85, 227, 0);
         t.textAlign(t.LEFT, t.TOP);
 
-        float y = loc.y;
+        float y = loc.y + 5;
         t.text(level, loc.x + 5, y);
         y += 10;
 
