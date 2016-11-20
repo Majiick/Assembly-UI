@@ -67,10 +67,10 @@ public class Test extends PApplet{
     }
 
     public static void makeRunner(int startLocation) {
-        runners.add(new Instruction_Runner(bytes, startLocation, cs));
+        runners.add(new Instruction_Runner(bytes, startLocation, cs, 0));
     }
 
-    public static void makeRunner(int startLocation, Instruction_Runner from_block) {
-        runners.add(new Instruction_Runner(bytes, startLocation, cs, from_block));
+    public static void makeRunner(int startLocation, Instruction_Runner from_block, int level) {
+        runners.add(new Instruction_Runner(bytes, startLocation, cs, from_block, level));
     }
 }

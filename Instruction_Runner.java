@@ -12,6 +12,7 @@ public class Instruction_Runner {
     byte[] bytes;
     int startLocation;
     int nextInstruction;
+    int level;
     Capstone cs;
     Stack stack = new Stack();
     Instruction_Runner from_block;
@@ -26,17 +27,18 @@ public class Instruction_Runner {
 
 
 
-    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, Instruction_Runner from_block) {
+    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, Instruction_Runner from_block, int level) {
         this.bytes = bytes;
         this.startLocation = startLocation;
         this.cs = cs;
         this.nextInstruction = startLocation;
         block = new Code_Block();
         this.from_block = from_block;
+        this.level = level;
     }
 
-    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs) {
-        this(bytes, startLocation, cs, null);
+    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, int level) {
+        this(bytes, startLocation, cs, null, level);
     }
 
     public void step() {
@@ -51,6 +53,7 @@ public class Instruction_Runner {
 //            System.out.printf("0x%x:\t%s\t%s\n", insn.address,
 //                    insn.mnemonic, insn.opStr);
 
+            block.level = "Level: " + this.level;
             nextInstruction += insn.size;
             block.instructions.add(insn);
 
@@ -77,7 +80,7 @@ public class Instruction_Runner {
                 } else {
                     System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
                     this.paused = true;
-                    Test.makeRunner(redirectionLocation, this);
+                    Test.makeRunner(redirectionLocation, this, this.level + 1);
                 }
             }
         }
