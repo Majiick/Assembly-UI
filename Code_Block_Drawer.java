@@ -57,7 +57,11 @@ public class Code_Block_Drawer {
                     if (runner.block.pos != null && runner.from_block.block.pos != null) {
                         Code_Block parent = runner.from_block.block;
                         Code_Block child = runner.block;
-                        t.line(parent.pos.x + parent.size.x/2, parent.pos.y + parent.size.y, child.pos.x + child.size.x/2, child.pos.y);
+
+                        PVector start = parent.getMaleStart();
+                        PVector end = child.getFemaleStart();
+
+                        t.line(start.x, start.y , end.x, end.y);
                     }
                 }
             }
