@@ -70,11 +70,15 @@ public class Test extends PApplet{
         System.out.print("\n");
     }
 
-    public static void makeRunner(int startLocation) {
-        runners.add(new Instruction_Runner(bytes, startLocation, cs, 0));
+    public static Instruction_Runner makeRunner(int startLocation) {
+        Instruction_Runner t = new Instruction_Runner(bytes, startLocation, cs, 0);
+        runners.add(t);
+        return t;
     }
 
-    public static void makeRunner(int startLocation, Instruction_Runner from_block, int level) {
-        runners.add(new Instruction_Runner(bytes, startLocation, cs, from_block, level));
+    public static Instruction_Runner makeRunner(int startLocation, Instruction_Runner from_block, int level) {
+        Instruction_Runner t = new Instruction_Runner(bytes, startLocation, cs, from_block, level);
+        runners.add(t);
+        return t;
     }
 }

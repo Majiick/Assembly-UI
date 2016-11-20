@@ -14,7 +14,6 @@ public class Instruction_Runner {
     int nextInstruction;
     int level;
     Capstone cs;
-    Stack stack = new Stack();
     Instruction_Runner from_block;
     Code_Block block;
 
@@ -82,7 +81,8 @@ public class Instruction_Runner {
                 } else {
                     System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
                     this.paused = true;
-                    Test.makeRunner(redirectionLocation, this, this.level + 1);
+                    Instruction_Runner t = Test.makeRunner(redirectionLocation, this, this.level + 1);
+                    t.getBlock().descriptors.add("Address: " + String.format("%02x", redirection.address));
                 }
             }
         }
