@@ -8,6 +8,7 @@ import processing.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Code_Block_Drawer {
     Test t;
@@ -27,7 +28,7 @@ public class Code_Block_Drawer {
 
         t.scale(scale);
 
-
+        //Put runners into levels. Why do I even need this tbh?
         int amount = 1;
         for (Instruction_Runner runner : runners) {
 //            runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x, 100 * amount + scaledViewOffset.y));
@@ -40,12 +41,17 @@ public class Code_Block_Drawer {
             levels.get(runner.level).add(runner);
         }
         //runners.forEach((runner) -> runner.getBlock().draw(t, new PVector(30 + scaledViewOffset.x, 30 + scaledViewOffset.y)));
-
+        int direction = -1;
         for(Vector<Instruction_Runner> level : levels.values()) {
             for(Instruction_Runner runner : level) {
+                if (runner.getBlock().directionInTree == 0) {
+                    runner.getBlock().directionInTree = direction;
+                }
+
                 int levelIndent = level_counters.get(runner.level);
                 level_counters.put(runner.level, levelIndent + 1);
-                runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x + (250 * levelIndent), 100 * amount + scaledViewOffset.y  + (1000 * runner.level)));
+                runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x + (250 * levelIndent) * runner.getBlock().directionInTree, 100 * amount + scaledViewOffset.y  + (1100 * runner.level)));
+                direction *= -1;
             }
         }
 
@@ -55,6 +61,7 @@ public class Code_Block_Drawer {
             for(Instruction_Runner runner : level) {
                 if (runner.from_block != null) {
                     if (runner.block.pos != null && runner.from_block.block.pos != null) {
+                        t.strokeWeight(ThreadLocalRandom.current().nextInt(1, 5));
                         Code_Block parent = runner.from_block.block;
                         Code_Block child = runner.block;
 
@@ -62,6 +69,7 @@ public class Code_Block_Drawer {
                         PVector end = child.getFemaleStart();
 
                         t.line(start.x, start.y , end.x, end.y);
+                        t.strokeWeight(1);
                     }
                 }
             }

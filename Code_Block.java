@@ -14,6 +14,7 @@ public class Code_Block {
     public String level = "0";
     public PVector pos;
     public PVector size;
+    public int directionInTree = 0;
 
     public void draw(Test t, PVector loc) {
         pos = loc;
