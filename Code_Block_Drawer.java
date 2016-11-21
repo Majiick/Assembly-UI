@@ -61,6 +61,7 @@ public class Code_Block_Drawer {
             for(Instruction_Runner runner : level) {
                 if (runner.from_block != null) {
                     if (runner.block.pos != null && runner.from_block.block.pos != null) {
+                        t.stroke(116, 255, 72);
                         t.strokeWeight(ThreadLocalRandom.current().nextInt(1, 5));
                         Code_Block parent = runner.from_block.block;
                         Code_Block child = runner.block;
@@ -70,6 +71,7 @@ public class Code_Block_Drawer {
 
                         t.line(start.x, start.y , end.x, end.y);
                         t.strokeWeight(1);
+                        t.stroke(255);
                     }
                 }
             }

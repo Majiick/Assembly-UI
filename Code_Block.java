@@ -14,7 +14,8 @@ public class Code_Block {
     public PVector pos;
     public PVector size;
     public int directionInTree = 0;
-    public boolean entryPoint = false;
+    public boolean entryNode = false;
+    public boolean exitNode = false;
     public PVector userMoveOffset = new PVector(0, 0);
 
     public void draw(Test t, PVector loc) {
@@ -25,8 +26,11 @@ public class Code_Block {
         t.stroke(116, 255, 72);
         t.strokeWeight(10.0f);
         t.fill(0);
-        if (entryPoint) {
+        if (entryNode) {
             t.fill(255, 0, 0);
+        }
+        if (exitNode) {
+            t.fill(255);
         }
         t.rect(loc.x, loc.y, size.x, size.y); //Draw a curved rectangle.
         t.strokeWeight(1.0f);

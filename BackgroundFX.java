@@ -26,7 +26,7 @@ public class BackgroundFX {
         }
 
         public void draw() {
-            t.strokeWeight(0.01f);
+            t.strokeWeight(ThreadLocalRandom.current().nextFloat() / 2.0f);
             float cord = range.getNext();
 
             if (direction == Direction.HORIZONTAL) {
@@ -42,18 +42,10 @@ public class BackgroundFX {
 
     BackgroundFX(Test t) {
         this.t = t;
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
-        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
+        for (int i = 0; i < ThreadLocalRandom.current().nextInt(50, 100); i++) {
+            bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
+            bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
+        }
     }
 
     public void draw() {

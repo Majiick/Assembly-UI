@@ -35,7 +35,7 @@ public class Instruction_Runner {
         this.from_block = from_block;
         this.level = level;
 
-        if (from_block == null) block.entryPoint = true;
+        if (from_block == null) block.entryNode = true;
     }
 
     Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, int level) {
@@ -71,6 +71,7 @@ public class Instruction_Runner {
                 }
 
                 if(redirection.address == Test.LOCATION_OF_EXITPROCESS) {
+                    block.exitNode = true;
                     end();
                 }
 
