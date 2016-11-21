@@ -31,8 +31,6 @@ public class Code_Block_Drawer {
         //Put runners into levels. Why do I even need this tbh?
         int amount = 1;
         for (Instruction_Runner runner : runners) {
-//            runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x, 100 * amount + scaledViewOffset.y));
-//            amount++;
             if (!levels.containsKey(runner.level)) {
                 levels.put(runner.level, new Vector<Instruction_Runner>());
                 level_counters.put(runner.level, 0);
@@ -40,7 +38,7 @@ public class Code_Block_Drawer {
 
             levels.get(runner.level).add(runner);
         }
-        //runners.forEach((runner) -> runner.getBlock().draw(t, new PVector(30 + scaledViewOffset.x, 30 + scaledViewOffset.y)));
+
         int direction = -1;
         for(Vector<Instruction_Runner> level : levels.values()) {
             for(Instruction_Runner runner : level) {

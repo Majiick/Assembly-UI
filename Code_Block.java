@@ -23,8 +23,8 @@ public class Code_Block {
     public void draw(Test t, PVector loc, float scale) {
         this.t = t; //This should be in the constructor, but need to refactor errything.
         pos = loc;
-        pos.x += userMoveOffset.x / scale;
-        pos.y += userMoveOffset.y / scale;
+        pos.x += userMoveOffset.x;
+        pos.y += userMoveOffset.y;
         size = new PVector(biggestInstructionLength() * 7, (descriptors.size() + instructions.size()) * 11 + 11, 7);
         isMouseOver(scale);
         //Draw rectangle.
@@ -37,7 +37,7 @@ public class Code_Block {
         if (exitNode) {
             t.fill(255);
         }
-        t.rect(loc.x, loc.y, size.x, size.y); //Draw a curved rectangle.
+        t.rect(pos.x, pos.y, size.x, size.y); //Draw a curved rectangle.
         t.strokeWeight(1.0f);
         t.stroke(0);
 
@@ -103,8 +103,8 @@ public class Code_Block {
             return false;
         }
 
-        userMoveOffset.x += t.mouseX - t.pmouseX;
-        userMoveOffset.y += t.mouseY - t.pmouseY;
+        userMoveOffset.x += (t.mouseX - t.pmouseX) / scale;
+        userMoveOffset.y += (t.mouseY - t.pmouseY) / scale;
         return true;
     }
 }
