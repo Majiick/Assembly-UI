@@ -50,7 +50,7 @@ public class Code_Block_Drawer {
 
                 int levelIndent = level_counters.get(runner.level);
                 level_counters.put(runner.level, levelIndent + 1);
-                runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x + (250 * levelIndent) * runner.getBlock().directionInTree, 100 * amount + scaledViewOffset.y  + (1100 * runner.level)));
+                runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x + (250 * levelIndent) * runner.getBlock().directionInTree, 100 * amount + scaledViewOffset.y  + (1100 * runner.level)), scale);
                 direction *= -1;
             }
         }
@@ -82,8 +82,16 @@ public class Code_Block_Drawer {
     }
 
     public void mouseDragged() {
-        viewOffset.x += t.mouseX - t.pmouseX;
-        viewOffset.y += t.mouseY - t.pmouseY;
+        boolean draggingBlock = false;
+        for (Instruction_Runner runner : t.runners) {
+            boolean isBeingDragged = runner.getBlock().mouseDragged(scale);
+            if (isBeingDragged) draggingBlock = true;
+        }
+
+        if(!draggingBlock) {
+            viewOffset.x += t.mouseX - t.pmouseX;
+            viewOffset.y += t.mouseY - t.pmouseY;
+        }
     }
 
     public void mouseWheel(MouseEvent event) {

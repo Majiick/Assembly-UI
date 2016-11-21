@@ -17,11 +17,16 @@ public class Code_Block {
     public boolean entryNode = false;
     public boolean exitNode = false;
     public PVector userMoveOffset = new PVector(0, 0);
+    Test t;
 
-    public void draw(Test t, PVector loc) {
+
+    public void draw(Test t, PVector loc, float scale) {
+        this.t = t; //This should be in the constructor, but need to refactor errything.
         pos = loc;
+        pos.x += userMoveOffset.x / scale;
+        pos.y += userMoveOffset.y / scale;
         size = new PVector(biggestInstructionLength() * 7, (descriptors.size() + instructions.size()) * 11 + 11, 7);
-
+        isMouseOver(scale);
         //Draw rectangle.
         t.stroke(116, 255, 72);
         t.strokeWeight(10.0f);
@@ -83,5 +88,23 @@ public class Code_Block {
 
     public PVector getFemaleStart() {
         return new PVector(pos.x + size.x/2 + traverseRangeFemale.getNext(), pos.y);
+    }
+
+    boolean isMouseOver(float scale) {
+        if(t.mouseX > pos.x * scale && t.mouseX < (pos.x+size.x)*scale && t.mouseY > pos.y * scale && t.mouseY < (pos.y+size.y) * scale){
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean mouseDragged(float scale) {
+        if(!isMouseOver(scale)) {
+            return false;
+        }
+
+        userMoveOffset.x += t.mouseX - t.pmouseX;
+        userMoveOffset.y += t.mouseY - t.pmouseY;
+        return true;
     }
 }
