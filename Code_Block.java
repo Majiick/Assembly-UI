@@ -5,7 +5,6 @@ A block of assembly code that ends with a ret or call to exit.
 import capstone.Capstone;
 import processing.core.PVector;
 import java.util.Collections;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
 public class Code_Block {
@@ -16,17 +15,23 @@ public class Code_Block {
     public PVector size;
     public int directionInTree = 0;
     public boolean entryPoint = false;
+    public PVector userMoveOffset = new PVector(0, 0);
 
     public void draw(Test t, PVector loc) {
         pos = loc;
         size = new PVector(biggestInstructionLength() * 7, (descriptors.size() + instructions.size()) * 11 + 11, 7);
-        //Draw rectangle.
-        t.fill(255, 140, 0);
-        if (entryPoint) {
-            t.fill(0);
-        }
 
+        //Draw rectangle.
+        t.stroke(116, 255, 72);
+        t.strokeWeight(10.0f);
+        t.fill(0);
+        if (entryPoint) {
+            t.fill(255, 0, 0);
+        }
         t.rect(loc.x, loc.y, size.x, size.y); //Draw a curved rectangle.
+        t.strokeWeight(1.0f);
+        t.stroke(0);
+
         traverseRangeFemale.updateRange((int)-(size.x/2), (int)(size.x/2));
         traverseRangeMale.updateRange((int)-(size.x/2), (int)(size.x/2));
 
@@ -62,47 +67,6 @@ public class Code_Block {
                 return Integer.compare((a.mnemonic + " " + a.opStr).length(), (b.mnemonic + " " + b.opStr).length());
             }
         }).opStr.length();
-    }
-
-
-    public enum Direction{
-        RIGHT,
-        LEFT
-    }
-
-    class Traverse_Range {
-        Direction direction;
-        int min;
-        int max;
-        int speed;
-        int val = ThreadLocalRandom.current().nextInt(min, max + 1);
-
-
-        Traverse_Range(int min, int max) {
-            this.min = min;
-            this.max = max;
-            direction = ThreadLocalRandom.current().nextInt(0, 10) > 5 ? Direction.LEFT : Direction.RIGHT;
-            speed = ThreadLocalRandom.current().nextInt(2, 5);
-        }
-
-        int getNext() {
-            if(direction == Direction.LEFT) {
-                val += speed;
-            } else {
-                val -= speed;
-            }
-
-            if (val > max || val < min) {
-                direction = direction == Direction.LEFT ? Direction.RIGHT : Direction.LEFT;
-            }
-
-            return val;
-        }
-
-        public void updateRange(int min, int max) {
-            this.min = min;
-            this.max = max;
-        }
     }
 
     Traverse_Range traverseRangeFemale = new Traverse_Range(0, 0);

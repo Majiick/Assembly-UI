@@ -16,6 +16,7 @@ public class Test extends PApplet{
     static Capstone cs;
     static byte[] bytes;
     Code_Block_Drawer drawer;
+    BackgroundFX bgfx;
 
     public void settings() {
         size(1000, 1000);
@@ -24,6 +25,7 @@ public class Test extends PApplet{
     public void setup() {
         PFont scifiFont = loadFont("MagmawaveCaps-Bold-48.vlw");
         textFont(scifiFont);
+        bgfx = new BackgroundFX(this);
 
         drawer = new Code_Block_Drawer(this);
 
@@ -39,7 +41,9 @@ public class Test extends PApplet{
     }
 
     public void draw(){
-        background(109, 0, 182);
+        //background(109, 0, 182);
+        background(0);
+        bgfx.draw();
         stroke(0);
 
         if (keyPressed ) {
