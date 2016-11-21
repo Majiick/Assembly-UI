@@ -1,5 +1,5 @@
 import com.sun.prism.paint.Color;
-
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +20,13 @@ public class BackgroundFX {
 
         BLine (Color color, Direction direction) {
             range = new Traverse_Range(0, direction == Direction.HORIZONTAL ? t.width : t.height);
+            range.setVal(ThreadLocalRandom.current().nextInt(0, t.width));
             this.color = color;
             this.direction = direction;
         }
 
         public void draw() {
-            t.strokeWeight(0.2f);
+            t.strokeWeight(0.01f);
             float cord = range.getNext();
 
             if (direction == Direction.HORIZONTAL) {
@@ -42,6 +43,16 @@ public class BackgroundFX {
     BackgroundFX(Test t) {
         this.t = t;
         bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
+        bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
         bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.VERTICAL));
     }
 

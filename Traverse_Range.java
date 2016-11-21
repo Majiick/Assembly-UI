@@ -39,6 +39,14 @@ class Traverse_Range {
         return val;
     }
 
+    public void setVal (int val) {
+        this.val = val;
+    }
+
+    public void setSpeed (int speed) {
+        this.speed = speed;
+    }
+
     public void updateRange(int min, int max) {
         this.min = min;
         this.max = max;
