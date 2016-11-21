@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Mnemonic_Redirection_Calculator {
     interface IInstruction {
         int calculateAbsoluteAddress(Capstone.CsInsn insn);
+        boolean isRegisterRedirection();
     }
 
     static class Valid_Instruction{ //SOME INSTRUCTIONS ARE 2 OPCODES BTW.
@@ -31,6 +32,10 @@ public class Mnemonic_Redirection_Calculator {
         public boolean equals(Object object) {
             Valid_Instruction other = (Valid_Instruction) object;
             return this.opcode == other.opcode && this.modrm == other.modrm;
+        }
+
+        public boolean isRegisterRedirection() {
+            return false;
         }
     }
 
@@ -65,12 +70,28 @@ public class Mnemonic_Redirection_Calculator {
 
         public int calculateAbsoluteAddress(Capstone.CsInsn insn) {
             X86.OpInfo operands = (X86.OpInfo) insn.operands;
+//            System.out.println("E8 Detected at: " + insn.address);
+//            System.out.println("E8 Detected: " + insn.mnemonic + " " + insn.opStr);
 
             return (int)operands.op[0].value.imm;
         }
     }
 
-    static IInstruction[] validInstructions = {new FF_15(), new E8(), new FF_25()};
+    static class FF_D0 extends Valid_Instruction implements IInstruction{
+        FF_D0() {
+            super(0xFF, 0xD0);
+        }
+
+        public int calculateAbsoluteAddress(Capstone.CsInsn insn) {
+            return 0;
+        }
+
+        public boolean isRegisterRedirection () {
+            return true;
+        }
+    }
+
+    static IInstruction[] validInstructions = {new FF_15(), new E8(), new FF_25(), new FF_D0()};
 
     public static Redirection getRedirectionLocation(Capstone.CsInsn insn) {
         X86.OpInfo operands = (X86.OpInfo) insn.operands;
@@ -84,7 +105,7 @@ public class Mnemonic_Redirection_Calculator {
 
         List<IInstruction> l = Arrays.asList(validInstructions).stream().filter((o) -> o.equals(new Valid_Instruction(operands.opcode[0], operands.modrm))).collect(Collectors.toList());
         if(!l.isEmpty()) {
-            return new Redirection(l.get(0).calculateAbsoluteAddress(insn));
+            return new Redirection(l.get(0).calculateAbsoluteAddress(insn), l.get(0).isRegisterRedirection());
         }
 
 
@@ -96,7 +117,7 @@ public class Mnemonic_Redirection_Calculator {
 //        System.out.println(operands.opcode[0] == (byte)0xFF && operands.modrm == (byte)0x15);
 //        System.out.println(new Valid_Instruction(0xFF, 0x15).equals(new Valid_Instruction(operands.opcode[0], operands.modrm)));
 //        System.out.println(String.format("%02x", operands.opcode[0]) + " " + String.format("%02x", operands.modrm));
-
+        System.out.println(insn.mnemonic + " ISN'T IN THE REGISTERED MNEMONICS.");
         return new Redirection(0);
     }
 }

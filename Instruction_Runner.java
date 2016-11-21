@@ -15,6 +15,7 @@ public class Instruction_Runner {
     int level;
     Capstone cs;
     Instruction_Runner from_block;
+    public List<Instruction_Runner> parents = new ArrayList<>();
     Code_Block block;
 
     boolean finished = false;
@@ -44,15 +45,15 @@ public class Instruction_Runner {
 
     public void step() {
         //http://stackoverflow.com/questions/14698350/x86-64-asm-maximum-bytes-for-an-instruction : The maximum bytes for one instruction is 15 bytes.
-        Capstone.CsInsn[] allInsn = cs.disasm(Arrays.copyOfRange(bytes, nextInstruction, nextInstruction + 15), nextInstruction, 0x1);
+        Capstone.CsInsn[] allInsn = cs.disasm(Arrays.copyOfRange(bytes, nextInstruction, nextInstruction + 15), nextInstruction, 0x1); //Array out of bounds on brogue on the end of the program to .bss section, that call should never happen because it's not in the IAT so it's not gonna be set and we're gonna go nowhere.
         if (allInsn.length > 1 || allInsn.length == 0) {
             System.out.println("This should never happen. Not throwing an exception because it's to see if my preconception is false and this cannot be fixed.");
             System.exit(-1);
         }
 
         for (Capstone.CsInsn insn : allInsn) {
-//            System.out.printf("0x%x:\t%s\t%s\n", insn.address,
-//                    insn.mnemonic, insn.opStr);
+            System.out.printf("0x%x:\t%s\t%s\n", insn.address,
+                    insn.mnemonic, insn.opStr);
 
             block.level = "Level: " + this.level;
             nextInstruction += insn.size;
@@ -61,12 +62,15 @@ public class Instruction_Runner {
             if (Arrays.asList(flowRedirectors).contains(insn.mnemonic)) {
                 Redirection redirection = Mnemonic_Redirection_Calculator.getRedirectionLocation(insn);
                 int redirectionLocation = redirection.address;
-
+                System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
                 if(insn.mnemonic.equals("ret")) {
                     ret();
                 }
 
-                if(redirection.address == 0) {
+//                if(redirection.address == 0) {
+//                    continue;
+//                }
+                if(redirection.isRegisterRedirection) {
                     continue;
                 }
 
@@ -81,9 +85,14 @@ public class Instruction_Runner {
                     }
                 } else {
                     System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
-                    this.paused = true;
-                    Instruction_Runner t = Test.makeRunner(redirectionLocation, this, this.level + 1);
-                    t.getBlock().descriptors.add("Address: " + String.format("%02x", redirection.address));
+                    Instruction_Runner exists = Test.findRunner(redirectionLocation);
+                    if (exists == null) {
+                        this.paused = true;
+                        Instruction_Runner t = Test.makeRunner(redirectionLocation, this, this.level + 1);
+                        t.getBlock().descriptors.add("Address: " + String.format("%02x", redirection.address));
+                    } else {
+                        System.out.println("Already exists");
+                    }
                 }
             }
         }
