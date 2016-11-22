@@ -1,0 +1,4 @@
+1. Add processing\core\library to libraries and tick it in modules>dependencies. ALT+CTRL+SHIFT+S
+2. Move java capstone binding fodler inside the project
+3. Git clone jna and add jna.jar in dependencies
+4. Download Windows capstone core engine for the dlls and drop the dll inside the project
