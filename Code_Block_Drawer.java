@@ -59,17 +59,11 @@ public class Code_Block_Drawer {
             for(Instruction_Runner runner : level) {
                 if (runner.from_block != null) {
                     if (runner.block.pos != null && runner.from_block.block.pos != null) {
-                        t.stroke(116, 255, 72);
-                        t.strokeWeight(ThreadLocalRandom.current().nextInt(1, 5));
-                        Code_Block parent = runner.from_block.block;
-                        Code_Block child = runner.block;
-
-                        PVector start = parent.getMaleStart();
-                        PVector end = child.getFemaleStart();
-
-                        t.line(start.x, start.y , end.x, end.y);
-                        t.strokeWeight(1);
-                        t.stroke(255);
+                        drawLine(runner, runner.from_block);
+                    }
+                    //Draw parents
+                    for (Instruction_Runner _parent : runner.parents) {
+                        drawLine(runner, _parent);
                     }
                 }
             }
@@ -77,6 +71,20 @@ public class Code_Block_Drawer {
 
 
 
+    }
+
+    void drawLine(Instruction_Runner _parent, Instruction_Runner _child) {
+        t.stroke(116, 255, 72);
+        t.strokeWeight(ThreadLocalRandom.current().nextInt(1, 5));
+        Code_Block parent = _parent.block;
+        Code_Block child = _child.block;
+
+        PVector start = parent.getFemaleStart();
+        PVector end = child.getMaleStart();
+
+        t.line(start.x, start.y , end.x, end.y);
+        t.strokeWeight(1);
+        t.stroke(255);
     }
 
     public void mouseDragged() {

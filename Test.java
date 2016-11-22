@@ -6,19 +6,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Test extends PApplet{
-//    final static int entryPointOfProgram = 0x12A0 - 0x1000; //hello world
-//    final static int IAT_RVA = 0xE14C + 0x400000;
-//    final static int IAT_SIZE = 0xFC;
-//    final static int LOCATION_OF_EXITPROCESS = 0x70d0;
+    final static int entryPointOfProgram = 0x12A0 - 0x1000; //hello world
+    final static int IAT_RVA = 0xE14C + 0x400000;
+    final static int IAT_SIZE = 0xFC;
+    final static int LOCATION_OF_EXITPROCESS = 0x70d0;
 //    final static int entryPointOfProgram = 0x12A0 - 0x1000; //brogue
 //    final static int entryPointOfProgram = 0x467C60 - 0x400000 - 0x1000;
 //    final static int IAT_RVA = 0x12f214 + 0x400000;
 //    final static int IAT_SIZE = 0x19c;
 //    final static int LOCATION_OF_EXITPROCESS = 0x67910;
-    final static int entryPointOfProgram = 0x12A0 - 0x1000; //lotto
-    final static int IAT_RVA = 0x000F150 + 0x400000;
-    final static int IAT_SIZE = 0xFC + 0x400000;
-    final static int LOCATION_OF_EXITPROCESS = 0x7808;
+//    final static int entryPointOfProgram = 0x12A0 - 0x1000; //lotto
+//    final static int IAT_RVA = 0x000F150 + 0x400000;
+//    final static int IAT_SIZE = 0xFC + 0x400000;
+//    final static int LOCATION_OF_EXITPROCESS = 0x7808;
 
     //Not super use of static, I admit. But, there shouldn't ever be more than one of these in Test.
     static List<Instruction_Runner> runners = new ArrayList<>();
@@ -38,9 +38,9 @@ public class Test extends PApplet{
 
         drawer = new Code_Block_Drawer(this);
 
-//        bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\helloWorld32.bin");
+        bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\helloWorld32.bin");
 //        bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\brogue.bin");
-        bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\lotto.bin");
+//        bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\lotto.bin");
         System.out.println("File size: " + bytes.length);
         System.out.println("Byte at entry point: " + String.format("%02x", bytes[entryPointOfProgram]));
         printBytes(Arrays.copyOfRange(bytes, entryPointOfProgram, entryPointOfProgram + 0x15));

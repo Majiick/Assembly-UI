@@ -128,6 +128,6 @@ public class Mnemonic_Redirection_Calculator {
 //        System.out.println(new Valid_Instruction(0xFF, 0x15).equals(new Valid_Instruction(operands.opcode[0], operands.modrm)));
 //        System.out.println(String.format("%02x", operands.opcode[0]) + " " + String.format("%02x", operands.modrm));
         System.out.println(insn.mnemonic + " ISN'T IN THE REGISTERED MNEMONICS.");
-        return new Redirection(0);
+        return new Redirection(0x0);
     }
 }

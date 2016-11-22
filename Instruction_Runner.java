@@ -65,6 +65,7 @@ public class Instruction_Runner {
                 System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
                 if(insn.mnemonic.equals("ret")) {
                     ret();
+                    break;
                 }
 
 //                if(redirection.address == 0) {
@@ -97,6 +98,7 @@ public class Instruction_Runner {
                         Instruction_Runner t = Test.makeRunner(redirectionLocation, this, this.level + 1);
                         t.getBlock().descriptors.add("Address: " + String.format("%02x", redirection.address));
                     } else {
+                        exists.parents.add(this);
                         System.out.println("Already exists");
                     }
                 }
