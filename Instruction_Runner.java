@@ -79,6 +79,12 @@ public class Instruction_Runner {
                     end();
                 }
 
+                if (!redirection.toIAT()) {
+                    if (redirection.isMemoryDereference) {
+                        continue;
+                    }
+                }
+
                 if (redirection.toIAT()) {
                     if (from_block != null) {
                         ret();
@@ -100,7 +106,12 @@ public class Instruction_Runner {
 
     void ret() {
         this.finished = true;
-        this.from_block.awaken();
+
+        try {
+            this.from_block.awaken();
+        } catch (java.lang.NullPointerException e) {
+            System.out.println("Can't return, from_block is empty.");
+        }
     }
 
     void awaken() {

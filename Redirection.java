@@ -4,6 +4,7 @@
 public class Redirection {
     int address = 0;
     public boolean isRegisterRedirection = false;
+    public boolean isMemoryDereference = false;
 
     Redirection(int address) {
         this.address = address;
@@ -11,6 +12,11 @@ public class Redirection {
     Redirection(int address, boolean isRegisterRedirection) {
         this.address = address;
         this.isRegisterRedirection = isRegisterRedirection;
+    }
+    Redirection(int address, boolean isRegisterRedirection, boolean isMemoryDereference) {
+        this.address = address;
+        this.isRegisterRedirection = isRegisterRedirection;
+        this.isMemoryDereference = isMemoryDereference;
     }
 
     public boolean toIAT() {

@@ -13,6 +13,7 @@ public class Mnemonic_Redirection_Calculator {
     interface IInstruction {
         int calculateAbsoluteAddress(Capstone.CsInsn insn);
         boolean isRegisterRedirection();
+        boolean isMemoryDereference();
     }
 
     static class Valid_Instruction{ //SOME INSTRUCTIONS ARE 2 OPCODES BTW.
@@ -37,6 +38,7 @@ public class Mnemonic_Redirection_Calculator {
         public boolean isRegisterRedirection() {
             return false;
         }
+        public boolean isMemoryDereference() {return false; }
     }
 
     static class FF_15 extends Valid_Instruction implements IInstruction{
@@ -49,6 +51,10 @@ public class Mnemonic_Redirection_Calculator {
             System.out.println((int)operands.op[0].value.mem.disp);
             return (int)operands.op[0].value.mem.disp;
         }
+
+        public boolean isMemoryDereference() {
+            return true;
+        }
     }
 
     static class FF_25 extends Valid_Instruction implements IInstruction{
@@ -60,6 +66,10 @@ public class Mnemonic_Redirection_Calculator {
             X86.OpInfo operands = (X86.OpInfo) insn.operands;
             System.out.println((int)operands.op[0].value.mem.disp);
             return (int)operands.op[0].value.mem.disp;
+        }
+
+        public boolean isMemoryDereference() {
+            return true;
         }
     }
 
@@ -105,7 +115,7 @@ public class Mnemonic_Redirection_Calculator {
 
         List<IInstruction> l = Arrays.asList(validInstructions).stream().filter((o) -> o.equals(new Valid_Instruction(operands.opcode[0], operands.modrm))).collect(Collectors.toList());
         if(!l.isEmpty()) {
-            return new Redirection(l.get(0).calculateAbsoluteAddress(insn), l.get(0).isRegisterRedirection());
+            return new Redirection(l.get(0).calculateAbsoluteAddress(insn), l.get(0).isRegisterRedirection(), l.get(0).isMemoryDereference());
         }
 
 

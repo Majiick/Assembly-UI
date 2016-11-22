@@ -93,7 +93,11 @@ public class Code_Block_Drawer {
     }
 
     public void mouseWheel(MouseEvent event) {
-        scale += event.getCount() / 10.0f;
+        zoom(event.getCount() / 10.0f);
+    }
+
+    public void zoom(float amount) {
+        scale += amount;
 
         if (scale < 0.1f) {
             scale = 0.1f;
