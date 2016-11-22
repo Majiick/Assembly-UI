@@ -76,6 +76,7 @@ public class Instruction_Runner {
                 }
 
                 if(redirection.address == Test.LOCATION_OF_EXITPROCESS) {
+                    block.descriptors.add("EXIT NODE.");
                     block.exitNode = true;
                     end();
                 }
@@ -88,6 +89,7 @@ public class Instruction_Runner {
 
                 if (redirection.toIAT()) {
                     if (from_block != null) {
+                        block.descriptors.add(Test.functionName(redirectionLocation));
                         ret();
                     }
                 } else {
@@ -96,7 +98,7 @@ public class Instruction_Runner {
                     if (exists == null) {
                         this.paused = true;
                         Instruction_Runner t = Test.makeRunner(redirectionLocation, this, this.level + 1);
-                        t.getBlock().descriptors.add("Address: " + String.format("%02x", redirection.address));
+                        t.getBlock().descriptors.add("Address: " + Test.functionName(redirectionLocation));
                     } else {
                         exists.parents.add(this);
                         System.out.println("Already exists");

@@ -26,6 +26,7 @@ public class Test extends PApplet{
     static byte[] bytes;
     Code_Block_Drawer drawer;
     BackgroundFX bgfx;
+    static HashMap<Integer, String> funcNames;
 
     public void settings() {
         size(2000, 2000);
@@ -37,8 +38,8 @@ public class Test extends PApplet{
         bgfx = new BackgroundFX(this);
 
         drawer = new Code_Block_Drawer(this);
-
         bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\helloWorld32.bin");
+        funcNames = FileReader.getImports("C:\\Users\\Ecoste\\Desktop\\New folder\\helloWorld32_importMacros.txt");
 //        bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\brogue.bin");
 //        bytes = FileReader.readFile("C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\lotto.bin");
         System.out.println("File size: " + bytes.length);
@@ -115,5 +116,13 @@ public class Test extends PApplet{
         }
 
         return null;
+    }
+
+    public static String functionName(int address) {
+        if (funcNames.containsKey(address)) {
+            return funcNames.get(address);
+        }
+
+        return "func_" + String.format("%02x", address);
     }
 }
