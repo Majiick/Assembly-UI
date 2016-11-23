@@ -10,10 +10,10 @@ public class Instruction_Runner {
     private static final String[] flowRedirectors = {"call", "jmp", "ret"};
 
     long startLocation;
-    long nextInstruction;
+    private long nextInstruction;
     int level;
     Instruction_Runner parent;
-    public List<Instruction_Runner> parents = new ArrayList<>();
+    List<Instruction_Runner> parents = new ArrayList<>();
     private Code_Block block;
     Test t;
 

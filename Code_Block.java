@@ -27,6 +27,7 @@ public class Code_Block {
         pos.y += userMoveOffset.y;
         size = new PVector(biggestInstructionLength() * 7, (descriptors.size() + instructions.size()) * 11 + 11, 7);
         isMouseOver(scale);
+
         //Draw rectangle.
         t.stroke(116, 255, 72);
         t.strokeWeight(10.0f);
@@ -41,6 +42,7 @@ public class Code_Block {
         t.strokeWeight(1.0f);
         t.stroke(0);
 
+        //Update female and male connection ranges in case width changes.
         traverseRangeFemale.updateRange((int)-(size.x/2), (int)(size.x/2));
         traverseRangeMale.updateRange((int)-(size.x/2), (int)(size.x/2));
 

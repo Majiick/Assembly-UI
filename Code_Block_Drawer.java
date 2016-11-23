@@ -6,7 +6,6 @@ import processing.core.PVector;
 import processing.event.MouseEvent;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,7 +18,7 @@ public class Code_Block_Drawer {
         this.t = t;
     }
 
-    public void draw(List<Instruction_Runner> runners) {
+    public void draw() {
         HashMap<Integer, Vector<Instruction_Runner>> levels = new HashMap<>();
         HashMap<Integer, Integer> level_counters = new HashMap<>();
 
@@ -27,9 +26,9 @@ public class Code_Block_Drawer {
 
         t.scale(scale);
 
-        //Put runners into levels. Why do I even need this tbh?
+        //Put runners into levels.
         int amount = 1;
-        for (Instruction_Runner runner : runners) {
+        for (Instruction_Runner runner : t.getRunners()) {
             if (!levels.containsKey(runner.level)) {
                 levels.put(runner.level, new Vector<Instruction_Runner>());
                 level_counters.put(runner.level, 0);
@@ -38,18 +37,17 @@ public class Code_Block_Drawer {
             levels.get(runner.level).add(runner);
         }
 
+        //Draw blocks.
         int direction = -1;
-        for(Vector<Instruction_Runner> level : levels.values()) {
-            for(Instruction_Runner runner : level) {
-                if (runner.getBlock().directionInTree == 0) {
-                    runner.getBlock().directionInTree = direction;
-                }
-
-                int levelIndent = level_counters.get(runner.level);
-                level_counters.put(runner.level, levelIndent + 1);
-                runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x + (250 * levelIndent) * runner.getBlock().directionInTree, 100 * amount + scaledViewOffset.y  + (1100 * runner.level)), scale);
-                direction *= -1;
+        for (Instruction_Runner runner : t.getRunners()) {
+            if (runner.getBlock().directionInTree == 0) {
+                runner.getBlock().directionInTree = direction;
             }
+
+            int levelIndent = level_counters.get(runner.level);
+            level_counters.put(runner.level, levelIndent + 1);
+            runner.getBlock().draw(t, new PVector(100 * amount + scaledViewOffset.x + (250 * levelIndent) * runner.getBlock().directionInTree, 100 * amount + scaledViewOffset.y  + (1100 * runner.level)), scale);
+            direction *= -1;
         }
 
         //draw lines

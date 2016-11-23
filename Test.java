@@ -49,7 +49,7 @@ public class Test extends PApplet{
             }
         }
 
-        drawer.draw(runners);
+        drawer.draw();
     }
 
     public void mouseDragged() {
