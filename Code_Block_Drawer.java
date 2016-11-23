@@ -14,7 +14,6 @@ public class Code_Block_Drawer {
     Test t;
     PVector viewOffset = new PVector(0,0);
     float scale = 1;
-    //Vector<Vector<Instruction_Runner>> levels = new Vector<>();
 
     Code_Block_Drawer(Test t) {
         this.t = t;
@@ -57,9 +56,9 @@ public class Code_Block_Drawer {
         t.stroke(255);
         for(Vector<Instruction_Runner> level : levels.values()) {
             for(Instruction_Runner runner : level) {
-                if (runner.from_block != null) {
-                    if (runner.block.pos != null && runner.from_block.block.pos != null) {
-                        drawLine(runner, runner.from_block);
+                if (runner.parent != null) {
+                    if (runner.getBlock().pos != null && runner.parent.getBlock().pos != null) {
+                        drawLine(runner, runner.parent);
                     }
                     //Draw parents
                     for (Instruction_Runner _parent : runner.parents) {
@@ -69,15 +68,13 @@ public class Code_Block_Drawer {
             }
         }
 
-
-
     }
 
     void drawLine(Instruction_Runner _parent, Instruction_Runner _child) {
         t.stroke(116, 255, 72);
         t.strokeWeight(ThreadLocalRandom.current().nextInt(1, 5));
-        Code_Block parent = _parent.block;
-        Code_Block child = _child.block;
+        Code_Block parent = _parent.getBlock();
+        Code_Block child = _child.getBlock();
 
         PVector start = parent.getFemaleStart();
         PVector end = child.getMaleStart();
@@ -89,7 +86,7 @@ public class Code_Block_Drawer {
 
     public void mouseDragged() {
         boolean draggingBlock = false;
-        for (Instruction_Runner runner : t.runners) {
+        for (Instruction_Runner runner : t.getRunners()) {
             boolean isBeingDragged = runner.getBlock().mouseDragged(scale);
             if (isBeingDragged) draggingBlock = true;
         }

@@ -6,10 +6,22 @@ import java.util.stream.Collectors;
 
 public class Test extends PApplet{
     //Not super use of static, I admit. But, there shouldn't ever be more than one of these in Test.
-    List<Instruction_Runner> runners = new ArrayList<>();
-    Capstone cs;
-    Code_Block_Drawer drawer;
-    BackgroundFX bgfx;
+    private List<Instruction_Runner> runners = new ArrayList<>();
+    private Capstone cs;
+    private Code_Block_Drawer drawer;
+    private BackgroundFX bgfx;
+
+    public static void main(String... args){
+        PApplet.main("Test");
+    }
+
+    public Capstone getCs() {
+        return cs;
+    }
+
+    public List<Instruction_Runner> getRunners() {
+        return runners;
+    }
 
     public void settings() {
         size(1000, 1000);
@@ -58,10 +70,6 @@ public class Test extends PApplet{
         }
     }
 
-    public static void main(String... args){
-        PApplet.main("Test");
-    }
-
     public static void printBytes(byte[] bytes) {
         for (byte b : bytes) {
             System.out.print(String.format("%02x", b));
@@ -70,13 +78,13 @@ public class Test extends PApplet{
     }
 
     public Instruction_Runner makeRunner(long startLocation) {
-        Instruction_Runner t = new Instruction_Runner(Binary.getInstance().bytes, startLocation, cs, 0, this);
+        Instruction_Runner t = new Instruction_Runner(startLocation, 0, this);
         runners.add(t);
         return t;
     }
 
     public Instruction_Runner makeRunner(long startLocation, Instruction_Runner from_block, int level) {
-        Instruction_Runner t = new Instruction_Runner(Binary.getInstance().bytes, startLocation, cs, from_block, level, this);
+        Instruction_Runner t = new Instruction_Runner(startLocation, from_block, level, this);
         runners.add(t);
         return t;
     }
