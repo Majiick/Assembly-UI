@@ -17,6 +17,7 @@ public class Instruction_Runner {
     Instruction_Runner from_block;
     public List<Instruction_Runner> parents = new ArrayList<>();
     Code_Block block;
+    Test t;
 
     boolean finished = false;
     boolean paused = false;
@@ -27,7 +28,7 @@ public class Instruction_Runner {
 
 
 
-    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, Instruction_Runner from_block, int level) {
+    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, Instruction_Runner from_block, int level, Test t) {
         this.bytes = bytes;
         this.startLocation = startLocation;
         this.cs = cs;
@@ -35,12 +36,13 @@ public class Instruction_Runner {
         block = new Code_Block();
         this.from_block = from_block;
         this.level = level;
+        this.t = t;
 
         if (from_block == null) block.entryNode = true;
     }
 
-    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, int level) {
-        this(bytes, startLocation, cs, null, level);
+    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, int level, Test t) {
+        this(bytes, startLocation, cs, null, level, t);
     }
 
     public void step() {
@@ -89,16 +91,16 @@ public class Instruction_Runner {
 
                 if (redirection.toIAT()) {
                     if (from_block != null) {
-                        block.descriptors.add(Test.functionName(redirectionLocation));
+                        block.descriptors.add(t.functionName(redirectionLocation));
                         ret();
                     }
                 } else {
                     System.out.println("Redirection location: " + String.format("%08x", redirectionLocation));
-                    Instruction_Runner exists = Test.findRunner(redirectionLocation);
+                    Instruction_Runner exists = t.findRunner(redirectionLocation);
                     if (exists == null) {
                         this.paused = true;
-                        Instruction_Runner t = Test.makeRunner(redirectionLocation, this, this.level + 1);
-                        t.getBlock().descriptors.add("Address: " + Test.functionName(redirectionLocation));
+                        Instruction_Runner x = t.makeRunner(redirectionLocation, this, this.level + 1);
+                        x.getBlock().descriptors.add("Address: " + t.functionName(redirectionLocation));
                     } else {
                         exists.parents.add(this);
                         System.out.println("Already exists");

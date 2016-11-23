@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 public class Test extends PApplet{
     //Not super use of static, I admit. But, there shouldn't ever be more than one of these in Test.
-    static List<Instruction_Runner> runners = new ArrayList<>();
-    static Capstone cs;
+    List<Instruction_Runner> runners = new ArrayList<>();
+    Capstone cs;
     Code_Block_Drawer drawer;
     BackgroundFX bgfx;
 
@@ -19,15 +19,12 @@ public class Test extends PApplet{
         //PFont scifiFont = loadFont("MagmawaveCaps-Bold-48.vlw");
         //textFont(scifiFont);
         bgfx = new BackgroundFX(this);
-
         drawer = new Code_Block_Drawer(this);
-//        bytes = FileReader.readFile(Binary.binaryPath);
-//        funcNames = FileReader.getImports(Binary.importPath);
 
         cs = new Capstone(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32);
         cs.setDetail(Capstone.CS_OPT_DETAIL); //Turn on detailed mode.
 
-        makeRunner(Binary.ENTRY_POINT);
+        makeRunner(Binary.ENTRY_POINT); //Make the first runner.
     }
 
     public void draw(){
@@ -74,19 +71,19 @@ public class Test extends PApplet{
         System.out.print("\n");
     }
 
-    public static Instruction_Runner makeRunner(int startLocation) {
-        Instruction_Runner t = new Instruction_Runner(Binary.bytes, startLocation, cs, 0);
+    public Instruction_Runner makeRunner(int startLocation) {
+        Instruction_Runner t = new Instruction_Runner(Binary.getInstance().bytes, startLocation, cs, 0, this);
         runners.add(t);
         return t;
     }
 
-    public static Instruction_Runner makeRunner(int startLocation, Instruction_Runner from_block, int level) {
-        Instruction_Runner t = new Instruction_Runner(Binary.bytes, startLocation, cs, from_block, level);
+    public Instruction_Runner makeRunner(int startLocation, Instruction_Runner from_block, int level) {
+        Instruction_Runner t = new Instruction_Runner(Binary.getInstance().bytes, startLocation, cs, from_block, level, this);
         runners.add(t);
         return t;
     }
 
-    public static Instruction_Runner findRunner(int startLocation) {
+    public Instruction_Runner findRunner(int startLocation) {
         for (Instruction_Runner runner : runners) { //Filter too pita here.
             if (runner.startLocation == startLocation) {
                 return runner;
@@ -96,9 +93,9 @@ public class Test extends PApplet{
         return null;
     }
 
-    public static String functionName(int address) {
-        if (Binary.funcNames.containsKey(address)) {
-            return Binary.funcNames.get(address);
+    public String functionName(int address) {
+        if (Binary.getInstance().funcNames.containsKey(address)) {
+            return Binary.getInstance().funcNames.get(address);
         }
 
         return "func_" + String.format("%02x", address);

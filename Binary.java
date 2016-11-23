@@ -8,13 +8,17 @@ public class Binary {
     final static String BINARY_PATH = "C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\helloWorld32.bin";
     final static String IMPORT_PATH = "C:\\Users\\Ecoste\\IdeaProjects\\i-didn-t-think-of-a-name-yet\\helloWorld32_importMacros.txt";
 
-    static byte[] bytes;
-    static HashMap<Integer, String> funcNames;
+    public byte[] bytes;
+    public HashMap<Integer, String> funcNames;
 
     private static final Binary instance = new Binary();
 
     private Binary() {
         bytes = FileReader.readFile(BINARY_PATH);
         funcNames = FileReader.getImports(IMPORT_PATH);
+    }
+
+    public static Binary getInstance() {
+        return instance;
     }
 }

@@ -10,9 +10,6 @@ public class BackgroundFX {
         HORIZONTAL
     }
 
-    Test t;
-    List<BLine> bLines = new ArrayList<>();
-
     class BLine {
         Traverse_Range range;
         Color color;
@@ -39,6 +36,9 @@ public class BackgroundFX {
         }
 
     }
+
+    Test t;
+    List<BLine> bLines = new ArrayList<>();
 
     BackgroundFX(Test t) {
         this.t = t;
