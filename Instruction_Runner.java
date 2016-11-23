@@ -75,7 +75,7 @@ public class Instruction_Runner {
                     continue;
                 }
 
-                if(redirection.address == Test.LOCATION_OF_EXITPROCESS) {
+                if(redirection.address == Binary.LOCATION_OF_EXITPROCESS) {
                     block.descriptors.add("EXIT NODE.");
                     block.exitNode = true;
                     end();

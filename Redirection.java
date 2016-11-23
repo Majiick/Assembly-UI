@@ -20,7 +20,7 @@ public class Redirection {
     }
 
     public boolean toIAT() {
-        if (address > Test.IAT_RVA && address < Test.IAT_RVA + Test.IAT_SIZE) {
+        if (address > Binary.IAT_RVA && address < Binary.IAT_RVA + Binary.IAT_SIZE) {
             return true;
         }
 
