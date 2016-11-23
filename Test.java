@@ -69,13 +69,13 @@ public class Test extends PApplet{
         System.out.print("\n");
     }
 
-    public Instruction_Runner makeRunner(int startLocation) {
+    public Instruction_Runner makeRunner(long startLocation) {
         Instruction_Runner t = new Instruction_Runner(Binary.getInstance().bytes, startLocation, cs, 0, this);
         runners.add(t);
         return t;
     }
 
-    public Instruction_Runner makeRunner(int startLocation, Instruction_Runner from_block, int level) {
+    public Instruction_Runner makeRunner(long startLocation, Instruction_Runner from_block, int level) {
         Instruction_Runner t = new Instruction_Runner(Binary.getInstance().bytes, startLocation, cs, from_block, level, this);
         runners.add(t);
         return t;

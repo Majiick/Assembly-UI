@@ -10,8 +10,8 @@ public class Instruction_Runner {
     static final String[] flowRedirectors = {"call", "jmp", "ret"};
 
     byte[] bytes;
-    int startLocation;
-    int nextInstruction;
+    long startLocation;
+    long nextInstruction;
     int level;
     Capstone cs;
     Instruction_Runner from_block;
@@ -28,7 +28,7 @@ public class Instruction_Runner {
 
 
 
-    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, Instruction_Runner from_block, int level, Test t) {
+    Instruction_Runner(byte[] bytes, long startLocation, Capstone cs, Instruction_Runner from_block, int level, Test t) {
         this.bytes = bytes;
         this.startLocation = startLocation;
         this.cs = cs;
@@ -41,13 +41,13 @@ public class Instruction_Runner {
         if (from_block == null) block.entryNode = true;
     }
 
-    Instruction_Runner(byte[] bytes, int startLocation, Capstone cs, int level, Test t) {
+    Instruction_Runner(byte[] bytes, long startLocation, Capstone cs, int level, Test t) {
         this(bytes, startLocation, cs, null, level, t);
     }
 
     public void step() {
         //http://stackoverflow.com/questions/14698350/x86-64-asm-maximum-bytes-for-an-instruction : The maximum bytes for one instruction is 15 bytes.
-        Capstone.CsInsn[] allInsn = cs.disasm(Arrays.copyOfRange(bytes, nextInstruction, nextInstruction + 15), nextInstruction, 0x1); //Array out of bounds on brogue on the end of the program to .bss section, that call should never happen because it's not in the IAT so it's not gonna be set and we're gonna go nowhere.
+        Capstone.CsInsn[] allInsn = cs.disasm(Arrays.copyOfRange(bytes, (int)nextInstruction, (int)nextInstruction + 15), nextInstruction, 0x1); //Array out of bounds on brogue on the end of the program to .bss section, that call should never happen because it's not in the IAT so it's not gonna be set and we're gonna go nowhere.
         if (allInsn.length > 1 || allInsn.length == 0) {
             System.out.println("This should never happen. Not throwing an exception because it's to see if my preconception is false and this cannot be fixed.");
             System.exit(-1);
