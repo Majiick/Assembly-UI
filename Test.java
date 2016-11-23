@@ -28,12 +28,10 @@ public class Test extends PApplet{
     }
 
     public void draw(){
-        //background(109, 0, 182);
         background(0);
         bgfx.draw();
-        stroke(0);
 
-        if (keyPressed ) {
+        if (keyPressed) {
             for (Instruction_Runner runner : runners.stream().filter((r) -> !r.finished && !r.paused).collect(Collectors.toList())) {
                 runner.step();
             }
