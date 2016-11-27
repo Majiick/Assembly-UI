@@ -20,4 +20,5 @@ And also some assemblies won't follow this function control flow structure, but 
 	Interface and extend in Mnemonic_Redirection_Calculator.
 	Collections comparator in Code_Block.
 	equals override in Mnemonic_Redirection_Calculator Valid_Instruction.
-	
+	Everything is split into classes more of less. Nice re-use of the Traverse_Range class.
+	Some of the structure, especially regarding passing around variables between classes is wonky.
