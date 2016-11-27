@@ -15,12 +15,12 @@ public class Instruction_Runner {
     Instruction_Runner parent;
     List<Instruction_Runner> parents = new ArrayList<>();
     private Code_Block block;
-    Test t;
+    Main t;
 
     boolean finished = false;
     boolean paused = false;
 
-    Instruction_Runner(long startLocation, Instruction_Runner parent, int level, Test t) {
+    Instruction_Runner(long startLocation, Instruction_Runner parent, int level, Main t) {
         this.startLocation = startLocation;
         this.nextInstruction = startLocation;
         block = new Code_Block();
@@ -31,7 +31,7 @@ public class Instruction_Runner {
         if (parent == null) block.entryNode = true;
     }
 
-    Instruction_Runner(long startLocation, int level, Test t) {
+    Instruction_Runner(long startLocation, int level, Main t) {
         this(startLocation, null, level, t);
     }
 

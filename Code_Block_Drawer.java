@@ -10,11 +10,11 @@ import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Code_Block_Drawer {
-    Test t;
+    Main t;
     PVector viewOffset = new PVector(0,0);
     float scale = 1;
 
-    Code_Block_Drawer(Test t) {
+    Code_Block_Drawer(Main t) {
         this.t = t;
     }
 

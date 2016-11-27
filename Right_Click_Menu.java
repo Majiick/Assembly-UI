@@ -3,11 +3,11 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
 public class Right_Click_Menu {
-    Test t;
+    Main t;
     Code_Block block;
     List<PVector> colors = new ArrayList<>();
 
-    Right_Click_Menu(Test t, Code_Block block) {
+    Right_Click_Menu(Main t, Code_Block block) {
         this.t = t;
         this.block = block;
 

@@ -20,10 +20,10 @@ public class Code_Block {
     public PVector userMoveOffset = new PVector(0, 0);
     public PVector color = new PVector(0, 0, 0);
     Right_Click_Menu rMenu = null;
-    Test t;
+    Main t;
 
 
-    public void draw(Test t, PVector loc, float scale) {
+    public void draw(Main t, PVector loc, float scale) {
         this.t = t; //This should be in the constructor, but need to refactor errything.
         pos = loc;
         pos.x += userMoveOffset.x;

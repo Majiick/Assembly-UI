@@ -37,10 +37,10 @@ public class BackgroundFX {
 
     }
 
-    Test t;
+    Main t;
     List<BLine> bLines = new ArrayList<>();
 
-    BackgroundFX(Test t) {
+    BackgroundFX(Main t) {
         this.t = t;
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(50, 100); i++) {
             bLines.add(new BLine(new Color(0.0f, 0.0f, 0.0f, 1.0f), Direction.HORIZONTAL));

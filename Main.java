@@ -4,15 +4,15 @@ import processing.event.MouseEvent;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Test extends PApplet{
-    //Not super use of static, I admit. But, there shouldn't ever be more than one of these in Test.
+public class Main extends PApplet{
+    //Not super use of static, I admit. But, there shouldn't ever be more than one of these in Main.
     private List<Instruction_Runner> runners = new ArrayList<>();
     private Capstone cs;
     private Code_Block_Drawer drawer;
     private BackgroundFX bgfx;
 
     public static void main(String... args){
-        PApplet.main("Test");
+        PApplet.main("Main");
     }
 
     public Capstone getCs() {
@@ -28,8 +28,8 @@ public class Test extends PApplet{
     }
 
     public void setup() {
-        //PFont scifiFont = loadFont("MagmawaveCaps-Bold-48.vlw");
-        //textFont(scifiFont);
+        PFont scifiFont = loadFont("MagmawaveCaps-Bold-48.vlw");
+        textFont(scifiFont);
         bgfx = new BackgroundFX(this);
         drawer = new Code_Block_Drawer(this);
 
