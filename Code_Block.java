@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.*;
 
 public class Code_Block {
+    //Public abuse yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee boiiiiiiiiiiiiiiiiiiiiiiiiii
     public List<Capstone.CsInsn> instructions = new ArrayList<>();
     public List<String> descriptors = new ArrayList<>();
     public String level = "0";
@@ -17,6 +18,8 @@ public class Code_Block {
     public boolean entryNode = false;
     public boolean exitNode = false;
     public PVector userMoveOffset = new PVector(0, 0);
+    public PVector color = new PVector(0, 0, 0);
+    Right_Click_Menu rMenu = null;
     Test t;
 
 
@@ -32,6 +35,7 @@ public class Code_Block {
         t.stroke(116, 255, 72);
         t.strokeWeight(10.0f);
         t.fill(0);
+        t.fill(color.x, color.y, color.z);
         if (entryNode) {
             t.fill(255, 0, 0);
         }
@@ -66,6 +70,8 @@ public class Code_Block {
             t.text(insn.mnemonic + " " + insn.opStr, loc.x + 5, y);
             y += 10;
         }
+
+        if (rMenu != null) rMenu.draw();
     }
 
     int biggestInstructionLength() {
@@ -109,4 +115,19 @@ public class Code_Block {
         userMoveOffset.y += (t.mouseY - t.pmouseY) / scale;
         return true;
     }
+
+    public void mousePressed(int mouseButton, float scale) {
+        if(isMouseOver(scale) && mouseButton == t.RIGHT) {
+            if (rMenu == null) {
+                rMenu = new Right_Click_Menu(t, this);
+            }
+        } else {
+            if (rMenu != null && !rMenu.isMouseOver(scale)) {
+                rMenu = null;
+            }
+        }
+
+        if (rMenu != null && rMenu.isMouseOver(scale)) rMenu.mousePressed(mouseButton, scale);
+    }
+
 }

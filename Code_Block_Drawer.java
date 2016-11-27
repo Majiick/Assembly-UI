@@ -106,4 +106,10 @@ public class Code_Block_Drawer {
             scale = 0.1f;
         }
     }
+
+    public void mousePressed(int mouseButton) {
+        for (Instruction_Runner runner : t.getRunners()) {
+            runner.getBlock().mousePressed(mouseButton, scale);
+        }
+    }
 }

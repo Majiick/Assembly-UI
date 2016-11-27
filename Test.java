@@ -56,6 +56,10 @@ public class Test extends PApplet{
         drawer.mouseDragged();
     }
 
+    public void mousePressed() {
+        drawer.mousePressed(mouseButton);
+    }
+
     public void mouseWheel(MouseEvent event) {
         drawer.mouseWheel(event);
     }
