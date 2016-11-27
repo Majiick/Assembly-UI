@@ -113,6 +113,7 @@ public class Mnemonic_Redirection_Calculator {
 //        System.out.printf("0x%x:\t%s\t%s\n", insn.address,
 //                    insn.mnemonic, insn.opStr);
 
+        //Check if instruction is equal to one of the instructions in validInstructions.
         List<IInstruction> l = Arrays.asList(validInstructions).stream().filter((o) -> o.equals(new Valid_Instruction(operands.opcode[0], operands.modrm))).collect(Collectors.toList());
         if(!l.isEmpty()) {
             return new Redirection(l.get(0).calculateAbsoluteAddress(insn), l.get(0).isRegisterRedirection(), l.get(0).isMemoryDereference());
