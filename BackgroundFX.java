@@ -3,6 +3,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Class to draw fancy background effects.
+ */
+
 
 public class BackgroundFX {
     public enum Direction{

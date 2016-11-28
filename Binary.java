@@ -1,7 +1,8 @@
 import java.util.HashMap;
 
 public class Binary {
-    final static long ENTRY_POINT = 0x12A0 - 0x1000; //hello world
+    //Just get these using CFF Explorer or something :)
+    final static long ENTRY_POINT = 0x12A0 - 0x1000;
     final static long IAT_RVA = 0xE14C + 0x400000;
     final static long IAT_SIZE = 0xFC;
     final static long LOCATION_OF_EXITPROCESS = 0x70d0;

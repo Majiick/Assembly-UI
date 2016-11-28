@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Mnemonic_Redirection_Calculator {
-    interface IInstruction {
+    interface IInstruction { //We actually don't really need this interface, we can get by with only extending but wI just wanted to include this.
         int calculateAbsoluteAddress(Capstone.CsInsn insn);
         boolean isRegisterRedirection();
         boolean isMemoryDereference();
@@ -80,8 +80,6 @@ public class Mnemonic_Redirection_Calculator {
 
         public int calculateAbsoluteAddress(Capstone.CsInsn insn) {
             X86.OpInfo operands = (X86.OpInfo) insn.operands;
-//            System.out.println("E8 Detected at: " + insn.address);
-//            System.out.println("E8 Detected: " + insn.mnemonic + " " + insn.opStr);
 
             return (int)operands.op[0].value.imm;
         }
@@ -101,7 +99,7 @@ public class Mnemonic_Redirection_Calculator {
         }
     }
 
-    static IInstruction[] validInstructions = {new FF_15(), new E8(), new FF_25(), new FF_D0()};
+    static IInstruction[] validInstructions = {new FF_15(), new E8(), new FF_25(), new FF_D0()}; //The opcodes that we're handling.
 
     public static Redirection getRedirectionLocation(Capstone.CsInsn insn) {
         X86.OpInfo operands = (X86.OpInfo) insn.operands;
@@ -110,24 +108,12 @@ public class Mnemonic_Redirection_Calculator {
             System.exit(-2);
         }
 
-//        System.out.printf("0x%x:\t%s\t%s\n", insn.address,
-//                    insn.mnemonic, insn.opStr);
-
         //Check if instruction is equal to one of the instructions in validInstructions.
         List<IInstruction> l = Arrays.asList(validInstructions).stream().filter((o) -> o.equals(new Valid_Instruction(operands.opcode[0], operands.modrm))).collect(Collectors.toList());
         if(!l.isEmpty()) {
             return new Redirection(l.get(0).calculateAbsoluteAddress(insn), l.get(0).isRegisterRedirection(), l.get(0).isMemoryDereference());
         }
 
-
-//        if(Arrays.asList(validInstructions).contains(new Valid_Instruction(operands.opcode[0], operands.modrm))) {
-//            System.out.println(operands.op[0].value.mem.disp);
-//        }
-
-
-//        System.out.println(operands.opcode[0] == (byte)0xFF && operands.modrm == (byte)0x15);
-//        System.out.println(new Valid_Instruction(0xFF, 0x15).equals(new Valid_Instruction(operands.opcode[0], operands.modrm)));
-//        System.out.println(String.format("%02x", operands.opcode[0]) + " " + String.format("%02x", operands.modrm));
         System.out.println(insn.mnemonic + " ISN'T IN THE REGISTERED MNEMONICS.");
         return new Redirection(0x0);
     }

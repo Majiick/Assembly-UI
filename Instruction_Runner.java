@@ -106,12 +106,7 @@ public class Instruction_Runner {
 
     void ret() {
         this.finished = true;
-
-//        try {
-            this.parent.awaken();
-//        } catch (java.lang.NullPointerException e) {
-//            System.out.println("Can't return, parent is empty.");
-//        }
+        this.parent.awaken();
     }
 
     void awaken() {

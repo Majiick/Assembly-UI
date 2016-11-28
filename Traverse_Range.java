@@ -1,5 +1,8 @@
 import java.util.concurrent.ThreadLocalRandom;
 
+/*
+    Class that takes in a range and will walk along the path returning values at a certain speed(step), when it reaches an edge it will go in the other direction.
+*/
 
 class Traverse_Range {
     public enum Direction{

@@ -69,6 +69,9 @@ public class Code_Block_Drawer {
     }
 
     void drawLine(Instruction_Runner _parent, Instruction_Runner _child) {
+        /*
+        Draws a line from parent block to child block.
+         */
         t.stroke(116, 255, 72);
         t.strokeWeight(ThreadLocalRandom.current().nextInt(1, 5));
         Code_Block parent = _parent.getBlock();

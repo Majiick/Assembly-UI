@@ -8,23 +8,22 @@ import java.util.Collections;
 import java.util.*;
 
 public class Code_Block {
-    //Public abuse yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee boiiiiiiiiiiiiiiiiiiiiiiiiii
     public List<Capstone.CsInsn> instructions = new ArrayList<>();
-    public List<String> descriptors = new ArrayList<>();
-    public String level = "0";
-    public PVector pos;
-    public PVector size;
-    public int directionInTree = 0;
-    public boolean entryNode = false;
-    public boolean exitNode = false;
-    public PVector userMoveOffset = new PVector(0, 0);
-    public PVector color = new PVector(0, 0, 0);
+    List<String> descriptors = new ArrayList<>();
+    String level = "0";
+    PVector pos;
+    PVector size;
+    int directionInTree = 0;
+    boolean entryNode = false;
+    boolean exitNode = false;
+    PVector userMoveOffset = new PVector(0, 0);
+    PVector color = new PVector(0, 0, 0);
     Right_Click_Menu rMenu = null;
     Main t;
 
 
     public void draw(Main t, PVector loc, float scale) {
-        this.t = t; //This should be in the constructor, but need to refactor errything.
+        this.t = t; //This should be in the constructor.
         pos = loc;
         pos.x += userMoveOffset.x;
         pos.y += userMoveOffset.y;
@@ -75,6 +74,9 @@ public class Code_Block {
     }
 
     int biggestInstructionLength() {
+        /*
+        Returns the biggest string length of the instructors to determine the width of the box.
+         */
         if (instructions.isEmpty()) {
             return 0;
         }
@@ -90,7 +92,6 @@ public class Code_Block {
     Traverse_Range traverseRangeMale = new Traverse_Range(0, 0);
 
     public PVector getMaleStart() {
-        //return new PVector(pos.x + size.x/2  + traverseRangeMale.getNext(), pos.y + size.y);
         return new PVector(pos.x + size.x/2, pos.y + size.y);
     }
 

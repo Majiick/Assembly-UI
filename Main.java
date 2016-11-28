@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main extends PApplet{
-    //Not super use of static, I admit. But, there shouldn't ever be more than one of these in Main.
     private List<Instruction_Runner> runners = new ArrayList<>();
     private Capstone cs;
     private Code_Block_Drawer drawer;
@@ -28,11 +27,15 @@ public class Main extends PApplet{
     }
 
     public void setup() {
+        //Set text font.
         PFont scifiFont = loadFont("MagmawaveCaps-Bold-48.vlw");
         textFont(scifiFont);
+
+        //Create backgroundfx and code block drawer.
         bgfx = new BackgroundFX(this);
         drawer = new Code_Block_Drawer(this);
 
+        //Initialize capstone
         cs = new Capstone(Capstone.CS_ARCH_X86, Capstone.CS_MODE_32);
         cs.setDetail(Capstone.CS_OPT_DETAIL); //Turn on detailed mode.
 

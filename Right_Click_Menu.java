@@ -2,6 +2,10 @@ import processing.core.PVector;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
+/*
+This is the color menu when you right click.
+ */
+
 public class Right_Click_Menu {
     Main t;
     Code_Block block;
