@@ -22,3 +22,5 @@ And also some assemblies won't follow this function control flow structure, but 
 	equals override in Mnemonic_Redirection_Calculator Valid_Instruction.
 	Everything is split into classes more of less. Nice re-use of the Traverse_Range class.
 	Some of the structure, especially regarding passing around variables between classes is wonky.
+	
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/9qwKGmbGpvo/0.jpg)](https://www.youtube.com/watch?v=9qwKGmbGpvo)
